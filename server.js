@@ -1,36 +1,14 @@
+const PORT = process.env.PORT || 3001;
 const express = require("express")
 const app = express()
-const PORT = 3001;
-const notes = require("./public/assets/js/db/db.json");
-const router = express.Router();
+const notes = require("./db/db.json");
+
 
 const path = require('path')
-//const fs = require('fs');
-
-app.set("view engine", "")
+const fs = require('fs');
 
 //Middleware
 app.use(express.static("public"))
-
-
-//HTML routes
-router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "index.html"))
-    console.log("come")
-})
-
-router.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "notes.html"))
-    console.log("come")
-})
-
-router.get("*", (req, res) => {
-    console.log("here")
-    res.sendFile(path.join(__dirname, "index.html"))
-})
-
-
-app.use("/", router);
 
 //API routes
 app.get("/api/notes", (req, res) => {
@@ -38,22 +16,37 @@ app.get("/api/notes", (req, res) => {
     res.json(notes)
 })
 
+
+//Creating new notes
+function newNotes() {
+
+
+}
+
 //Post API request
 app.post("/api/notes", (req, res)=> {
     console.log("Success!")
-    res.json(notes)
+    res.json(newNotes)
 })
 
 
-app.get("/api/notes/:notesId", (req, res)=> {
-    res.json(req.params);
+//HTML routes
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"))
+    console.log("come")
 })
 
 
+app.get("/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "notes.html"))
+    console.log("come")
+})
 
-app.post("/apit/notes" )
-
-
+/*app.get("*", (req, res) => {
+    console.log("here")
+    res.sendFile(path.join(__dirname, "index.html"))
+})
+*/
 
 
 app.listen(PORT, () => {
